@@ -1,0 +1,484 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Model" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="Хранилище ModelContainer">
+          <EntitySet Name="Category" EntityType="Хранилище Model.Category" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Order" EntityType="Хранилище Model.Order" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OrderItem" EntityType="Хранилище Model.OrderItem" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="OrderStatus" EntityType="Хранилище Model.OrderStatus" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PaymentSystem" EntityType="Хранилище Model.PaymentSystem" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Product" EntityType="Хранилище Model.Product" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Subcategory" EntityType="Хранилище Model.Subcategory" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SubcategoryProduct" EntityType="Хранилище Model.SubcategoryProduct" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_OrderItem_Order" Association="Хранилище Model.FK_OrderItem_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderItem" EntitySet="OrderItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subcategory_Category" Association="Хранилище Model.FK_Subcategory_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Subcategory" EntitySet="Subcategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubcategoryProduct_Product" Association="Хранилище Model.FK_SubcategoryProduct_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="SubcategoryProduct" EntitySet="SubcategoryProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubcategoryProduct_Subcategory" Association="Хранилище Model.FK_SubcategoryProduct_Subcategory">
+            <End Role="Subcategory" EntitySet="Subcategory" />
+            <End Role="SubcategoryProduct" EntitySet="SubcategoryProduct" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NameRu" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImageExt" Type="nchar" MaxLength="10" />
+          <Property Name="NameEn" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="OrderStatusRu" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentSysRu" Type="nvarchar" MaxLength="50" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrderStatusEn" Type="nvarchar" MaxLength="50" />
+          <Property Name="PaymentSysEn" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="NameRu" Type="nvarchar" MaxLength="50" />
+          <Property Name="Number" Type="int" />
+          <Property Name="Price" Type="decimal" Scale="2" />
+          <Property Name="Profit" Type="decimal" Scale="2" />
+          <Property Name="NameEn" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NameRu" Type="nvarchar" MaxLength="50" />
+          <Property Name="NameEn" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="PaymentSystem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Nominal" Type="int" />
+          <Property Name="KeyCode" Type="nvarchar" MaxLength="300" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NameRu" Type="nvarchar" MaxLength="50" />
+          <Property Name="DescriptionRu" Type="text" />
+          <Property Name="ImageExt" Type="nchar" MaxLength="10" />
+          <Property Name="Price" Type="decimal" Precision="16" Scale="2" />
+          <Property Name="AvailableDiscounts" Type="bit" Nullable="false" />
+          <Property Name="Discount" Type="int" />
+          <Property Name="Date" Type="date" />
+          <Property Name="PurchasePrice" Type="decimal" Precision="16" Scale="2" />
+          <Property Name="InStock" Type="int" />
+          <Property Name="CurrentBalance" Type="int" />
+          <Property Name="NameEn" Type="nvarchar" MaxLength="50" />
+          <Property Name="DescriptionEn" Type="text" />
+        </EntityType>
+        <EntityType Name="Subcategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NameRu" Type="nvarchar" MaxLength="50" />
+          <Property Name="ImageExt" Type="nchar" MaxLength="10" />
+          <Property Name="CategoryID" Type="int" />
+          <Property Name="NameEn" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SubcategoryProduct">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SubcategoryID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+        </EntityType>
+        <Association Name="FK_OrderItem_Order">
+          <End Role="Order" Type="Хранилище Model.Order" Multiplicity="0..1" />
+          <End Role="OrderItem" Type="Хранилище Model.OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subcategory_Category">
+          <End Role="Category" Type="Хранилище Model.Category" Multiplicity="0..1" />
+          <End Role="Subcategory" Type="Хранилище Model.Subcategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Subcategory">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubcategoryProduct_Product">
+          <End Role="Product" Type="Хранилище Model.Product" Multiplicity="0..1" />
+          <End Role="SubcategoryProduct" Type="Хранилище Model.SubcategoryProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SubcategoryProduct">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubcategoryProduct_Subcategory">
+          <End Role="Subcategory" Type="Хранилище Model.Subcategory" Multiplicity="0..1" />
+          <End Role="SubcategoryProduct" Type="Хранилище Model.SubcategoryProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subcategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SubcategoryProduct">
+              <PropertyRef Name="SubcategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="Model.Category" />
+          <EntitySet Name="Orders" EntityType="Model.Order" />
+          <EntitySet Name="OrderItems" EntityType="Model.OrderItem" />
+          <EntitySet Name="OrderStatuses" EntityType="Model.OrderStatus" />
+          <EntitySet Name="PaymentSystems" EntityType="Model.PaymentSystem" />
+          <EntitySet Name="Products" EntityType="Model.Product" />
+          <EntitySet Name="Subcategories" EntityType="Model.Subcategory" />
+          <EntitySet Name="SubcategoryProducts" EntityType="Model.SubcategoryProduct" />
+          <AssociationSet Name="FK_Subcategory_Category" Association="Model.FK_Subcategory_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Subcategory" EntitySet="Subcategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItem_Order" Association="Model.FK_OrderItem_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderItem" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubcategoryProduct_Product" Association="Model.FK_SubcategoryProduct_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="SubcategoryProduct" EntitySet="SubcategoryProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubcategoryProduct_Subcategory" Association="Model.FK_SubcategoryProduct_Subcategory">
+            <End Role="Subcategory" EntitySet="Subcategories" />
+            <End Role="SubcategoryProduct" EntitySet="SubcategoryProducts" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRu" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ImageExt" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="NameEn" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Subcategories" Relationship="Model.FK_Subcategory_Category" FromRole="Category" ToRole="Subcategory" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="FirstName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Address" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="OrderStatusRu" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="PaymentSysRu" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="OrderStatusEn" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="PaymentSysEn" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="OrderItems" Relationship="Model.FK_OrderItem_Order" FromRole="Order" ToRole="OrderItem" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="NameRu" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Number" Type="Int32" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Profit" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="NameEn" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Order" Relationship="Model.FK_OrderItem_Order" FromRole="OrderItem" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="OrderStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRu" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="NameEn" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="PaymentSystem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Nominal" Type="Int32" />
+          <Property Name="KeyCode" Type="String" MaxLength="300" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="UserName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRu" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="DescriptionRu" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="ImageExt" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="Price" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="AvailableDiscounts" Type="Boolean" Nullable="false" />
+          <Property Name="Discount" Type="Int32" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="PurchasePrice" Type="Decimal" Precision="16" Scale="2" />
+          <Property Name="InStock" Type="Int32" />
+          <Property Name="CurrentBalance" Type="Int32" />
+          <Property Name="NameEn" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="DescriptionEn" Type="String" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="SubcategoryProducts" Relationship="Model.FK_SubcategoryProduct_Product" FromRole="Product" ToRole="SubcategoryProduct" />
+        </EntityType>
+        <EntityType Name="Subcategory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRu" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ImageExt" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="CategoryID" Type="Int32" />
+          <Property Name="NameEn" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Category" Relationship="Model.FK_Subcategory_Category" FromRole="Subcategory" ToRole="Category" />
+          <NavigationProperty Name="SubcategoryProducts" Relationship="Model.FK_SubcategoryProduct_Subcategory" FromRole="Subcategory" ToRole="SubcategoryProduct" />
+        </EntityType>
+        <EntityType Name="SubcategoryProduct">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="SubcategoryID" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="Model.FK_SubcategoryProduct_Product" FromRole="SubcategoryProduct" ToRole="Product" />
+          <NavigationProperty Name="Subcategory" Relationship="Model.FK_SubcategoryProduct_Subcategory" FromRole="SubcategoryProduct" ToRole="Subcategory" />
+        </EntityType>
+        <Association Name="FK_Subcategory_Category">
+          <End Role="Category" Type="Model.Category" Multiplicity="0..1" />
+          <End Role="Subcategory" Type="Model.Subcategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Subcategory">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItem_Order">
+          <End Role="Order" Type="Model.Order" Multiplicity="0..1" />
+          <End Role="OrderItem" Type="Model.OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubcategoryProduct_Product">
+          <End Role="Product" Type="Model.Product" Multiplicity="0..1" />
+          <End Role="SubcategoryProduct" Type="Model.SubcategoryProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SubcategoryProduct">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubcategoryProduct_Subcategory">
+          <End Role="Subcategory" Type="Model.Subcategory" Multiplicity="0..1" />
+          <End Role="SubcategoryProduct" Type="Model.SubcategoryProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subcategory">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SubcategoryProduct">
+              <PropertyRef Name="SubcategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="Model.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NameRu" ColumnName="NameRu" />
+                <ScalarProperty Name="ImageExt" ColumnName="ImageExt" />
+                <ScalarProperty Name="NameEn" ColumnName="NameEn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="Model.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="OrderStatusRu" ColumnName="OrderStatusRu" />
+                <ScalarProperty Name="PaymentSysRu" ColumnName="PaymentSysRu" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="OrderStatusEn" ColumnName="OrderStatusEn" />
+                <ScalarProperty Name="PaymentSysEn" ColumnName="PaymentSysEn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderItems">
+            <EntityTypeMapping TypeName="Model.OrderItem">
+              <MappingFragment StoreEntitySet="OrderItem">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="NameRu" ColumnName="NameRu" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Profit" ColumnName="Profit" />
+                <ScalarProperty Name="NameEn" ColumnName="NameEn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderStatuses">
+            <EntityTypeMapping TypeName="Model.OrderStatus">
+              <MappingFragment StoreEntitySet="OrderStatus">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NameRu" ColumnName="NameRu" />
+                <ScalarProperty Name="NameEn" ColumnName="NameEn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentSystems">
+            <EntityTypeMapping TypeName="Model.PaymentSystem">
+              <MappingFragment StoreEntitySet="PaymentSystem">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nominal" ColumnName="Nominal" />
+                <ScalarProperty Name="KeyCode" ColumnName="KeyCode" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="Model.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NameRu" ColumnName="NameRu" />
+                <ScalarProperty Name="DescriptionRu" ColumnName="DescriptionRu" />
+                <ScalarProperty Name="ImageExt" ColumnName="ImageExt" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="AvailableDiscounts" ColumnName="AvailableDiscounts" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="InStock" ColumnName="InStock" />
+                <ScalarProperty Name="CurrentBalance" ColumnName="CurrentBalance" />
+                <ScalarProperty Name="NameEn" ColumnName="NameEn" />
+                <ScalarProperty Name="DescriptionEn" ColumnName="DescriptionEn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subcategories">
+            <EntityTypeMapping TypeName="Model.Subcategory">
+              <MappingFragment StoreEntitySet="Subcategory">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NameRu" ColumnName="NameRu" />
+                <ScalarProperty Name="ImageExt" ColumnName="ImageExt" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="NameEn" ColumnName="NameEn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubcategoryProducts">
+            <EntityTypeMapping TypeName="Model.SubcategoryProduct">
+              <MappingFragment StoreEntitySet="SubcategoryProduct">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SubcategoryID" ColumnName="SubcategoryID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

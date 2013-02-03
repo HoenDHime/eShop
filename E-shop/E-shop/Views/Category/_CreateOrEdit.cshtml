@@ -1,0 +1,20 @@
+@model E_shop.Models.Category
+
+@* This partial view defines form fields that will appear when creating and editing entities *@   
+<div class="editor-label">
+    @Resources.ProductAndCRUD.NameRu
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.NameRu)
+    @Html.ValidationMessageFor(model => model.NameRu)
+</div>
+    
+<div class="editor-label">
+    @Resources.ProductAndCRUD.NameEn
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.NameEn)
+    @Html.ValidationMessageFor(model => model.NameEn)
+</div>
+   
+

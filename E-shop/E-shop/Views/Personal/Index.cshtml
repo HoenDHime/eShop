@@ -1,0 +1,118 @@
+﻿@model E_shop.Models.UserProfile
+
+@using E_shop.Code;
+
+@using MvcContrib.UI.Grid;
+@using MvcContrib.Pagination;
+@using MvcContrib.UI.Pager;
+
+@*@{
+    ViewBag.Title = string.Format("Личная страница | {0}", E_shop.Constants.TITLE);
+}*@
+
+@*<p>
+    @Html.ActionLink("На главную", "Index", "Home")
+    @E_shop.Constants.BREADCRUMBS_SEPARATOR
+    Личная страница
+</p>*@
+
+<h2>@Html.Resource("PersonalPage")</h2>
+
+<p>@Html.ActionLink(Html.Resource("ChangePassword"), "ChangePassword", "Account")
+   @Html.ActionLink(Resources.ProductAndCRUD.Edit, "Edit")</p>
+
+<table>
+    <tr>
+        <td>@Resources.ProductAndCRUD.FirstName</td>
+        <td style="font-weight:bold">@Model.FirstName</td>
+    </tr>
+    <tr>
+        <td>@Resources.ProductAndCRUD.LastName</td>
+        <td style="font-weight:bold">@Model.LastName</td>
+    </tr>
+    <tr>
+        <td>@Resources.ProductAndCRUD.TelephoneNumber</td>
+        <td style="font-weight:bold">@Model.Phone</td>
+    </tr>
+    <tr>
+        <td>@Resources.ProductAndCRUD.Address</td>
+        <td style="font-weight:bold">@Model.Address</td>
+    </tr>
+    <tr>
+        <td>@Html.Resource("YourDiscount")</td>
+        @if (User.IsInRole(E_shop.Constants.ROLE_USER))
+        {       
+        <td> 5%</td>
+        }
+        else if (User.IsInRole(E_shop.Constants.ROLE_VIPUSER))
+        {       
+        <td> 10%</td>
+        }
+    </tr>
+</table>
+
+<h2>@Html.Resource("Monitoring")</h2>
+
+@{
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName); 
+    
+    E_shop.Models.OrderRepository orderRepository = new E_shop.Models.OrderRepository(new E_shop.Models.Entities());
+    E_shop.Models.OrderItemRepository orderItemRepository = new E_shop.Models.OrderItemRepository(new E_shop.Models.Entities());
+    var AllOrderForuser = orderRepository.List().Where(e => e.UserName == User.Identity.Name)
+        .Where(s => s.OrderStatusRu != "Доставлен/Оплачен").Where(s => s.OrderStatusRu != "Отмененный")
+        .Where(s => s.OrderStatusEn != "Delivered / paid").Where(s => s.OrderStatusEn != "Canceled");
+
+    var ord = new List<IEnumerable<E_shop.Models.OrderItem>>();
+    
+    var orderItem = orderItemRepository.List();
+    foreach (var h in AllOrderForuser)
+    {
+        orderItem = orderItemRepository.List().Where(i => i.OrderID == h.ID);
+        ord.Add(orderItem);
+    }
+
+    @Html.Grid(AllOrderForuser.OrderByDescending(s=>s.Date)).Columns(column =>
+    {
+        column.For(x => Html.ActionLink(x.Date.ToString(), "Cancellation", "Order", new { x.ID }, null)).Named(Resources.ProductAndCRUD.Date);
+        column.For(x => !cultureName.Equals("en") ? x.OrderStatusRu : x.OrderStatusEn).Named(Resources.GlobalString.OrdersStatus);
+        column.For(x => !cultureName.Equals("en") ? x.PaymentSysRu : x.PaymentSysEn).Named(Resources.GlobalString.PaymentSystem);
+    }).Empty(Html.Resource("NotOrder"))
+}
+<br />
+
+@using (Html.BeginForm("SetCulture", "Home"))
+{
+    var culture = System.Threading.Thread.CurrentThread.CurrentUICulture.Name.ToLowerInvariant();
+    <fieldset>
+    <legend>@Html.Resource("Language")</legend>
+        <input name="culture" id="ru-Ru" value="ru-Ru" type="radio" @selected("ru-Ru", culture) /> <label style="color: #000;" for="ru-Ru">@Html.Resource("Russian")</label> <br />
+        <input name="culture" id="en" value="en" type="radio" @selected("en", culture) /> <label style="color: #000;" for="en">@Html.Resource("English")</label> <br />
+    </fieldset>  
+}
+
+@helper selected(string c, string culture)
+{
+    if (c == culture)
+    {
+         @:checked="checked"
+     }
+     
+ }
+
+<script type="text/javascript">
+    $(function () {
+        $("input[type='radio']").click(function () {
+            $(this).parents("form").submit(); // apply by posting form
+        });
+
+        // highlight selected language
+        $("input[type='radio']:checked").next().css("font-weight", "bold");
+    });
+</script>
+
+
+

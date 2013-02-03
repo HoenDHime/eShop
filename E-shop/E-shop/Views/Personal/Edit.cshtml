@@ -1,0 +1,40 @@
+﻿@model E_shop.Models.UserProfile
+@using E_shop.Code;
+
+@*@{
+    ViewBag.Title = string.Format("Редактирование личных данных | {0}", E_shop.Constants.TITLE);
+}*@
+
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<p>@Html.ActionLink("Отмена", "Index")</p>
+<h2>@Html.Resource("EditProfile")</h2>
+
+@using (Html.BeginForm()) 
+{ 
+    @Html.ValidationSummary()
+    
+    <div class="editor-label">
+    @Html.LabelFor(model => model.FirstName)
+    </div>
+    @Html.EditorFor(model => model.FirstName)
+
+    <div class="editor-label">
+    @Html.LabelFor(model => model.LastName)
+    </div>
+    @Html.EditorFor(model => model.LastName)
+
+    <div class="editor-label">
+    @Html.LabelFor(model => model.Phone)
+    </div>
+    @Html.EditorFor(model => model.Phone)
+
+    <div class="editor-label">
+    @Html.LabelFor(model => model.Address)
+    </div>
+    @Html.EditorFor(model => model.Address)
+    <br /><br />  
+    
+    <input type="submit" value="@Resources.ProductAndCRUD.Save" />
+}

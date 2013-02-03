@@ -1,0 +1,90 @@
+﻿@model E_shop.Models.Order
+@using E_shop.Code;
+
+@*@{
+    ViewBag.Title = string.Format("{0} {1} {2} | Заказы | {3}", Model.Date.ToString(),
+        Model.LastName, Model.FirstName, E_shop.Constants.TITLE);
+}
+
+<p>
+    @Html.ActionLink("На главную", "Index", "Home")
+    @E_shop.Constants.BREADCRUMBS_SEPARATOR
+    @Html.ActionLink("Заказы", "Index")
+    @E_shop.Constants.BREADCRUMBS_SEPARATOR
+    @string.Format("{0} {1} {2}", Model.Date.ToString(), Model.LastName, Model.FirstName)
+</p>*@
+
+<h2>@string.Format("{0} {1} {2}", Model.Date, Model.LastName, Model.FirstName)</h2>
+
+@{
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName);
+}  
+
+<p><span style="font-weight:bold">@Resources.ProductAndCRUD.TelephoneNumber: </span>@Model.Phone</p>
+<p><span style="font-weight:bold">@Resources.ProductAndCRUD.Address: </span>@Model.Address</p>
+<p><span style="font-weight:bold">@Resources.ProductAndCRUD.Email: </span>@Model.Email</p>
+<p><span style="font-weight:bold">@Html.Resource("OrderStatus"): </span>@(!cultureName.Equals("en") ? Model.OrderStatusRu : Model.OrderStatusEn)</p>
+<p><span style="font-weight:bold">@Resources.GlobalString.PaymentSystem: </span>@(!cultureName.Equals("en") ? Model.OrderStatusRu : Model.OrderStatusEn)</p>
+
+@using (Html.BeginForm("ChangeStatus", "Order", FormMethod.Post))
+{
+    @Html.Hidden("orderID", Model.ID)
+
+    E_shop.Models.Repository.OrderStatusRepository orderStatusRepository = new E_shop.Models.Repository.OrderStatusRepository(new E_shop.Models.Entities());
+
+    var queryStatuses = orderStatusRepository.List().Select(item => new { id = item.ID, Name = !cultureName.Equals("en") ? item.NameRu : item.NameEn }).ToList();
+    
+    var listStatuses = queryStatuses.Select(item => new SelectListItem() {
+        Text = item.Name, 
+        Value = item.id.ToString(), 
+        Selected = false
+    }).ToList();
+    @Html.DropDownList("statusID", listStatuses, "...", null)
+
+    <input type="submit" value="@Html.Resource("ChangeStatus")" />
+}
+
+<h2>@Resources.GlobalString.Products</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th style="padding-left:20px">@Resources.ProductAndCRUD.Name</th>
+        <th style="padding-left:20px">@Resources.ProductAndCRUD.Price</th>
+        <th style="padding-left:20px">@Html.Resource("Quantity")</th>
+        <th style="padding-left:20px">@Html.Resource("TotalValue")</th>
+    </tr>
+    @foreach (var item in Model.OrderItems)
+    {
+        //string cultureName = null;
+        //HttpCookie cultureCookie = Request.Cookies["_culture"];
+        //if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+        //else { cultureName = Request.UserLanguages[0]; }
+        //cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName); 
+           
+        <tr>
+            <td>@item.ID</td>
+            <td style="padding-left:20px">@(!cultureName.Equals("en") ? item.NameRu : item.NameEn)</td>
+            <td style="padding-left:20px">@item.Price @Resources.ProductAndCRUD.UAH</td>
+            <td style="padding-left:20px">@item.Number @Html.Resource("Pieces")</td>
+            <td style="padding-left:20px">@(item.Price * item.Number) @Resources.ProductAndCRUD.UAH</td>
+        </tr>
+    }
+    <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td style="font-weight:bold">@Html.Resource("InTotal"):
+        @Model.OrderItems.Select(item => item.Price * item.Number).Sum() @Resources.ProductAndCRUD.UAH</td>
+    </tr>
+</table>
+
+<p>
+    @Html.ActionLink(Resources.ProductAndCRUD.Delete, "Delete", new { id=Model.ID }) |
+    @Html.ActionLink(Resources.GlobalString.BackToList, "Details")
+</p>

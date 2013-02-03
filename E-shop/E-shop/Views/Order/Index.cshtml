@@ -1,0 +1,65 @@
+﻿@model IEnumerable<E_shop.Models.Order>
+@using E_shop.Code;
+@using MvcContrib.UI.Grid;
+@using MvcContrib.Pagination;
+@using MvcContrib.UI.Pager;
+
+@*@{
+    ViewBag.Title = string.Format("Заказы | {0}", E_shop.Constants.TITLE);
+}
+
+<p>
+    @Html.ActionLink("На главную", "Index", "Home")
+    @E_shop.Constants.BREADCRUMBS_SEPARATOR
+    Заказы
+</p>*@
+
+ @using (Html.BeginForm("Index"))
+ {
+    List<SelectListItem> list = new List<SelectListItem>();
+                list.Add(new SelectListItem() { Text = Html.Resource("lastmonth"), Value ="1" });
+                list.Add(new SelectListItem() { Text = Html.Resource("currentmonth"), Value = "2" });
+                list.Add(new SelectListItem() { Text = Html.Resource("currentyear"), Value = "3" });
+                list.Add(new SelectListItem() { Text = Html.Resource("profitlastmonth"), Value = "4" });
+                list.Add(new SelectListItem() { Text = Html.Resource("profitcurrentmonth"), Value = "5" });
+                list.Add(new SelectListItem() { Text = Html.Resource("profitcurrentyear"), Value = "6" });                      
+    <p>@Html.Resource("FilterBy") @Html.DropDownList("Filters",list, ViewData["Filters"])</p>
+     
+    <input type="submit" value="@Resources.ProductAndCRUD.Choose" />
+ } 
+<p/>
+    @Html.Pager((IPagination)Model).First(Resources.Other.First).Last(Resources.Other.Last).Next(Resources.Other.Next).Previous(Resources.Other.Back).Format(Resources.Other.Elements)
+<p/>
+@{
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName);
+}
+       
+@Html.Grid(Model).Columns(column=>{
+    column.For(x => Html.ActionLink(x.Date.ToString(), "Details", new { x.ID })).Named(Resources.ProductAndCRUD.Date);
+    column.For(x => x.LastName + " " + x.FirstName).Named(Html.Resource("LastFirstName"));
+    column.For(x => x.OrderItems.Select(orderItem => orderItem.Price * orderItem.Number).Sum()+ Resources.ProductAndCRUD.UAH).Named(Html.Resource("OrderValue"));
+    column.For(x => x.OrderItems.Select(orderItem => orderItem.Profit).Sum() + Resources.ProductAndCRUD.UAH).Named(Html.Resource("ProfitOrder"));
+    column.For(x => !cultureName.Equals("en") ? x.PaymentSysRu : x.PaymentSysEn).Named(Html.Resource("PaymentSystem"));
+}).Empty(Resources.Other.FoundNot)
+
+<p/>
+    @Html.Pager((IPagination)Model).First(Resources.Other.First).Last(Resources.Other.Last).Next(Resources.Other.Next).Previous(Resources.Other.Back).Format(Resources.Other.Elements)
+<p/>
+
+<br />
+
+@if (ViewData["profit"] != null)
+{
+    <h2>@Html.Resource("ProfitSelectedPEriod") - @ViewData["profit"] @Resources.ProductAndCRUD.UAH.</h2>
+}   
+
+<br />
+@using (Html.BeginForm("BestSellingProducts","Order")) 
+{ 
+    <input type="submit" value="@Html.Resource("SeeBestSolingProduct")" />
+}
+

@@ -1,0 +1,105 @@
+@model IEnumerable<E_shop.Models.Category>
+@using MvcContrib.UI.Grid;
+@using E_shop.Code;
+
+<script src="../../Scripts/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="../../Scripts/jquery.treeview.js" type="text/javascript"></script>
+<link href="../../Content/jquery.treeview.css" rel="stylesheet" type="text/css"  />
+
+@*@{
+    ViewBag.Title = string.Format("Категории | {0}", E_shop.Constants.TITLE);
+}
+
+<p>
+    @Html.ActionLink("На главную", "Index", "Home")
+    @E_shop.Constants.BREADCRUMBS_SEPARATOR
+    Категории
+</p>*@
+
+@if (Request.IsAuthenticated && User.IsInRole(E_shop.Constants.ROLE_ADMIN))
+{
+<p>@Html.ActionLink(Resources.ProductAndCRUD.Create, "Create")</p>
+}
+
+<table><tr valign="top"><td style="color: #fff;">
+@{
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName);
+        
+    @Html.Grid(Model).Columns(column =>
+{
+    if (Request.IsAuthenticated && User.IsInRole(E_shop.Constants.ROLE_ADMIN))
+    {
+        column.For(x => Html.ActionLink(!cultureName.Equals("en") ? x.NameRu : x.NameEn, "Details", new { x.ID })).Named(Html.Resource("ImageEditing"));
+    }
+    column.For(x => x.ImageExt != null ?
+        "<a href=\"" + Url.Action("Index", "Subcategory", new { x.ID }, null) + "\"><img src=\"" + Url.Content("~/Content/" + Resources.GlobalString.CATEGORY_MINI_IMAGES_FOLDER + "/"
+        + x.ID + x.ImageExt) + "\"/></a>" + "<br />" + Html.ActionLink(!cultureName.Equals("en") ? x.NameRu : x.NameEn, "Index", "Subcategory", new { x.ID }, null)
+        : "<a href=\"" + Url.Action("Index", "Subcategory", new { x.ID }, null) + "\"><img src=\"" + Url.Content("~/Content/" + Resources.GlobalString.CATEGORY_MINI_IMAGES_FOLDER + "/"
+        + "0.jpg") + "\"/></a>" + "<br />" + Html.ActionLink(!cultureName.Equals("en") ? x.NameRu : x.NameEn, "Index", "Subcategory", new { x.ID }, null)).Encode(false).Named(Resources.ProductAndCRUD.Name);
+}).Empty(Resources.Other.FoundNot)
+}
+</td>
+    <td align="center" width="80%">
+        <ul id="example" class="filetree">
+                <li><span class="folder">@Html.Resource("PlaneTable1")</span>
+                        <ul>
+                            <li><span class="file" style="text-align: left;">
+                                  @Html.Resource("PlaneTable2")<br />
+                                    <b>@Html.Resource("PlaneTable3")</b>
+                                    <img src="@Url.Content("~/Content/Other/default.jpeg")" alt="Planshet" /><br />
+                                    @Html.Resource("PlaneTable4")<br />
+                                    <b>@Html.Resource("PlaneTable5")</b><br />
+                                    <img src="@Url.Content("~/Content/Other/planshetandroid.jpeg")" alt="Planshet" /><br />
+                                    <b>@Html.Resource("PlaneTable6")</b><br />
+                                    <img src="@Url.Content("~/Content/Other/planshettext.jpeg")" alt="Planshet" /><br />
+                                    @Html.Resource("PlaneTable7")
+                                </span></li>
+                        </ul>
+                </li>
+                <li><span class="folder">@Html.Resource("Mobile1")</span>
+                        <ul>
+                            <li><span class="file" style="text-align: left;">
+                            <b>@Html.Resource("Mobile2")</b><br />
+                            @Html.Resource("Mobile3")<br />
+                            <img src="@Url.Content("~/Content/Other/telephonefunk.jpeg")" alt="Phone" /><br />
+                            @Html.Resource("Mobile4")
+                            <img src="@Url.Content("~/Content/Other/telephonevubor.jpeg")" alt="Phone" />
+                            </span></li>
+                         </ul>
+                </li>
+                <li><span class="folder">@Html.Resource("TV1")</span>
+                        <ul>
+                            <li><span class="file" style="text-align: left;">
+                                <b>@Html.Resource("TV2")</b><br />
+                                   @Html.Resource("TV3")<br />
+                                    <img src="@Url.Content("~/Content/Other/televizor.jpg")" alt="TV" /><br />
+                            </span></li>
+                        </ul>
+                </li>
+                <li><span class="folder">@Html.Resource("Dishwasher1")</span>
+                        <ul>
+                            <li><span class="file" style="text-align: left;">
+                               @Html.Resource("Dishwasher2")<br />
+                                <img src="@Url.Content("~/Content/Other/posydomoechn.jpeg")" alt="Pff" /><br />
+                               @Html.Resource("Dishwasher3")<br />
+                                </span></li>
+                        </ul>
+                </li>
+        </ul>
+    </td>
+</tr></table>
+
+<script type="text/javascript">
+            $(document).ready(function () {
+                $("#example").treeview({
+                    persist: "location",
+                    collapsed: true,
+                    animated: "medium"
+                });
+
+            });
+</script>

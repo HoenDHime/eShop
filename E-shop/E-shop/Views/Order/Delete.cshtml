@@ -1,0 +1,58 @@
+@model E_shop.Models.Order
+@using E_shop.Code;
+
+@*@{
+    ViewBag.Title = "Delete";
+}*@
+
+@{
+        string cultureName = null;
+        HttpCookie cultureCookie = Request.Cookies["_culture"];
+        if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+        else { cultureName = Request.UserLanguages[0]; }
+        cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName);   
+}
+
+<h2>@Resources.ProductAndCRUD.Delete</h2>
+
+<h3>@Html.Resource("DeleteThis")</h3>
+<fieldset>
+
+    <div class="display-label">@Html.Resource("Date")</div>
+    <div class="display-field">@String.Format("{0:g}", Model.Date)</div>
+
+    <div class="display-label">@Resources.ProductAndCRUD.FirstName</div>
+    <div class="display-field">@Model.FirstName</div>
+
+    <div class="display-label">@Resources.ProductAndCRUD.LastName</div>
+    <div class="display-field">@Model.LastName</div>
+
+    <div class="display-label">@Resources.ProductAndCRUD.TelephoneNumber</div>
+    <div class="display-field">@Model.Phone</div>
+
+    <div class="display-label">@Resources.ProductAndCRUD.Address</div>
+    <div class="display-field">@Model.Address</div>
+
+    <div class="display-label">@Html.Resource("OrderStatus")</div>
+    <div class="display-field">@(!cultureName.Equals("en") ? Model.OrderStatusRu : Model.OrderStatusEn)</div>
+
+    <div class="display-label">@Resources.GlobalString.PaymentSystem</div>
+    <div class="display-field">@(!cultureName.Equals("en") ? Model.PaymentSysRu : Model.PaymentSysEn)</div>
+
+    <div class="display-label">@Html.Resource("UserName")</div>
+    <div class="display-field">@Model.UserName</div>
+
+    <div class="display-label">@Resources.ProductAndCRUD.Email</div>
+    <div class="display-field">@Model.Email</div>
+
+    <div class="display-label">@Html.Resource("OrderItems")</div>
+    <div class="display-field">@(Model.OrderItems == null ? "None" : Model.OrderItems.Count.ToString())</div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink(Resources.GlobalString.BackToList, "Index")
+    </p>
+}
+
+

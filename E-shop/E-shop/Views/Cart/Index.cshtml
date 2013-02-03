@@ -1,0 +1,180 @@
+﻿@model Dictionary<int, int> 
+@using E_shop.Code;
+
+@*@{
+    ViewBag.Title = string.Format("Корзина | {0}", E_shop.Constants.TITLE);
+}*@
+
+<script src="@Url.Content("../../Scripts/MicrosoftMvcAjax.js")" type="text/javascript"></script>
+<script src="@Url.Content("../../Scripts/MicrosoftAjax.js")" type="text/javascript"></script>
+<script src="@Url.Content("../../Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
+ 
+@*<p>
+    @Html.ActionLink("На главную", "Index", "Home")
+    @E_shop.Constants.BREADCRUMBS_SEPARATOR
+    Корзина
+</p>*@
+ 
+<h2>@Resources.GlobalString.Cart</h2>
+ 
+@if (Model == null || Model.Count == 0)
+{
+    @Html.Resource("CartIsEmpty")
+}
+else
+{
+    decimal price = 0;
+
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName);
+    
+    <table>
+    @foreach (var key in Model.Keys)
+    {
+        E_shop.Models.IProductRepository productRepository = new E_shop.Models.ProductRepository(new E_shop.Models.Entities());
+        E_shop.Models.Product product = productRepository.Find(key);
+        price += product.Price.HasValue ? product.Price.Value * Model[key] : 0;       
+        
+        <tr>
+            <td>@(!cultureName.Equals("en") ? product.NameRu : product.NameEn)</td>
+            <td>
+            @using (Html.BeginForm("ChangeValue", "Cart", FormMethod.Post))
+            {
+                @Html.TextBox("number", Model[key], new { style = "width:30px" })
+                @Html.Hidden("id", key)
+                <input type="submit" value="@Html.Resource("ChangeTheNumberOf")" />
+            }
+            </td>           
+            <td>@{
+        if (Request.IsAuthenticated)
+        {
+            @Math.Round((product.Price.HasValue ? product.Price.Value * Model[key] * (User.IsInRole(E_shop.Constants.ROLE_USER) ? 0.95m : 0.9m) : 0), 2);
+        }
+        else 
+        {
+            @Math.Round((product.Price.HasValue ? product.Price.Value * Model[key] : 0), 2);
+        }
+                    }</td>
+            <td>
+            @using (Html.BeginForm("Delete", "Cart", FormMethod.Post, new {
+                onsubmit = "javascript:return confirm('" + Resources.GlobalString.AreYouSure + "');"
+            }))
+            {
+                @Html.Hidden("id", key)
+                <input type="submit" value="@Resources.ProductAndCRUD.Delete" />
+            }                     
+        </tr>
+        
+    }   
+        
+    @if (Request.IsAuthenticated)
+    {
+        price = User.IsInRole(E_shop.Constants.ROLE_USER) ? price * 0.95m : price * 0.9m;
+    }             
+
+    <tr>
+        <td style="padding-top:20px; font-weight:bold;">@Html.Resource("InTotal"):  </td>
+        <td>&nbsp;</td>
+        <td style="padding-top:20px; font-weight:bold;">@Math.Round(price,2)  @Resources.ProductAndCRUD.UAH</td>
+        <td>&nbsp;</td>
+    </tr>
+    </table>       
+
+    if (!Request.IsAuthenticated)
+    {       
+        using (Html.BeginForm("Save", "Cart"))   
+        {
+            <p>@Resources.ProductAndCRUD.LastName: </p>
+            @Html.TextBox("LastName") 
+            <p>@Resources.ProductAndCRUD.FirstName:</p>  
+            @Html.TextBox("FirstName") 
+            <p>@Resources.ProductAndCRUD.TelephoneNumber:</p>
+            @Html.TextBox("Phone") 
+            <p>@Resources.ProductAndCRUD.Address: </p>                
+            @Html.TextBox("Address") 
+            <p>@Resources.ProductAndCRUD.Email: </p>                
+            @Html.TextBox("Email")            
+            <p>@Html.Resource("PaymentSystem"): </p> 
+    
+            
+    
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem() { Text = !cultureName.Equals("en") ? Resources.ProductAndCRUD.InternalPaymentSystemRu : Resources.ProductAndCRUD.InternalPaymentSystemEn, Value = "1" });
+            list.Add(new SelectListItem() { Text = !cultureName.Equals("en") ? Resources.ProductAndCRUD.CreditCardRu : Resources.ProductAndCRUD.CreditCardEn, Value = "2" });
+       
+            @Html.DropDownList("PaymentSys",list);
+            <br /><br />
+    
+            E_shop.Models.UserProfile profile = new E_shop.Models.UserProfile(User.Identity.Name);
+                
+            <p>@Html.Resource("DiscountOnYourAccount") - @Html.ActionLink(Html.Resource("enter"), "LogOn", "Account").</p>
+            <p>@Html.Resource("IfYouDoNotHaveAnAccount") @Html.ActionLink(Html.Resource("SignUpHere"), "Register", "Account").</p>
+            if (price > 51500) 
+            {
+                <h2>@Html.Resource("YouHaveExceeded") 5000 @Html.Resource("Euro") (51500 @Resources.ProductAndCRUD.UAH)</h2>
+                <h2>@Html.Resource("Therefore")</h2>
+                <h2>@Html.Resource("OrChangeTheQuantityOrRemove")</h2>
+            }
+      //      else if(profile.Money<price)
+      //      { 
+      //          <h2>Недостаточно денег на счету</h2>
+      //          <h2>Пополните счет или воспользуйтесь кредитной карточкой</h2>
+      //      }
+            else
+            { 
+                <input type="submit" value="@Html.Resource("ToOrder")" />
+            }
+        }
+    }
+    else
+    {       
+        E_shop.Models.UserProfile profile = new E_shop.Models.UserProfile(User.Identity.Name);
+        using (Html.BeginForm("ChangeValueProfile","Cart"))   
+        {
+            <p>@Resources.ProductAndCRUD.LastName: @profile.LastName</p>
+            @Html.TextBox("LastName", profile.LastName)  
+            <p>@Resources.ProductAndCRUD.FirstName: @profile.FirstName</p>  
+            @Html.TextBox("FirstName", profile.FirstName) 
+            <p>@Resources.ProductAndCRUD.TelephoneNumber: @profile.Phone</p>
+            @Html.TextBox("Phone", profile.Phone) 
+            <p>@Resources.ProductAndCRUD.Address: @profile.Address</p>                
+            @Html.TextBox("Address", profile.Address) 
+            <br /><br />       
+             <input type="submit" value="@Html.Resource("MakeChanges")" />
+        } 
+        using (Html.BeginForm("Save", "Cart"))   
+        {
+            <p>@Html.Resource("PaymentSystem"): </p> 
+    
+            List<SelectListItem> list = new List<SelectListItem>();
+            list.Add(new SelectListItem() { Text = !cultureName.Equals("en") ? Resources.ProductAndCRUD.InternalPaymentSystemRu : Resources.ProductAndCRUD.InternalPaymentSystemEn, Value = "1" });
+            list.Add(new SelectListItem() { Text = !cultureName.Equals("en") ? Resources.ProductAndCRUD.CreditCardRu : Resources.ProductAndCRUD.CreditCardEn, Value = "2" });
+       
+            @Html.DropDownList("PaymentSys",list);
+        
+            <br /><br />
+        
+            if (price > 51500) 
+            {
+                <h2>@Html.Resource("YouHaveExceeded") 5000 @Html.Resource("Euro") (51500 @Resources.ProductAndCRUD.UAH)</h2>
+                <h2>@Html.Resource("Therefore")</h2>
+                <h2>@Html.Resource("OrChangeTheQuantityOrRemove")</h2>
+            }
+    //        else if(profile.Money<price)
+    //        { 
+    //            <h2>Недостаточно денег на счету</h2>
+    //            <h2>Пополните счет или воспользуйтесь кредитной карточкой</h2>
+    //        }
+            else
+            { 
+                <input type="submit" value="@Html.Resource("ToOrder")" />
+            }     
+        }
+    }
+}

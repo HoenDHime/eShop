@@ -1,0 +1,37 @@
+@model E_shop.Models.Subcategory
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<div class="editor-label">
+    @Resources.ProductAndCRUD.NameRu
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.NameRu)
+    @Html.ValidationMessageFor(model => model.NameRu)
+</div>
+<div class="editor-label">
+    @Resources.ProductAndCRUD.NameEn
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.NameEn)
+    @Html.ValidationMessageFor(model => model.NameEn)
+</div>
+
+<div class="editor-label">
+    @Resources.ProductAndCRUD.Category
+</div>
+<div class="editor-field">    
+    @{
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName);    
+        
+        E_shop.Models.CategoryRepository subcategoryRepository = new E_shop.Models.CategoryRepository(new E_shop.Models.Entities());
+        var queryCategories = subcategoryRepository.List().Select(item => new { ID = item.ID, Name = !cultureName.Equals("en") ? item.NameRu : item.NameEn }).ToList();
+        var listCategories = queryCategories.Select(item => new SelectListItem() { Text = item.Name, Value = item.ID.ToString(), Selected = (Model != null && Model.CategoryID.Value == item.ID) }).ToList();
+    @Html.DropDownListFor(model => model.CategoryID, listCategories, "...")
+    }
+    <span style="color:Red">@Html.ValidationMessageFor(model => model.CategoryID)</span>
+</div>

@@ -1,0 +1,11 @@
+﻿@{
+    E_shop.Models.UserProfile profile = new E_shop.Models.UserProfile(User.Identity.Name);
+}
+
+@if(Request.IsAuthenticated) {
+    <text>@Resources.GlobalString.Welcome, <strong>@(string.IsNullOrWhiteSpace(profile.FirstName) ? User.Identity.Name : profile.FirstName)</strong>!
+    [ @Html.ActionLink(Resources.GlobalString.LogOff, "LogOff", "Account") ]</text>
+}
+else {
+    @:[ @Html.ActionLink(Resources.GlobalString.LogOn, "LogOn", "Account") ]
+}

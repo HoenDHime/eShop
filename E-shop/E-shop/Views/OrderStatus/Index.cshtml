@@ -1,0 +1,37 @@
+﻿@model IEnumerable<E_shop.Models.OrderStatus>
+@using E_shop.Code;
+
+@*@{
+    ViewBag.Title = string.Format("Статусы заказа | {0}", E_shop.Constants.TITLE);
+}*@
+
+@*<p>
+    @Html.ActionLink("На главную", "Index", "Home")
+    @E_shop.Constants.BREADCRUMBS_SEPARATOR
+    Статусы заказа
+</p>*@
+
+<h2>@Resources.GlobalString.OrdersStatus</h2>
+
+<p>@Html.ActionLink(Resources.ProductAndCRUD.Create, "Create")</p>
+
+<table>
+@{
+ 
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName);  
+}
+       
+@foreach (var item in Model)
+{
+    <tr>
+        <td>@Html.ActionLink(!cultureName.Equals("en") ? item.NameRu : item.NameEn, "Edit", new { id = item.ID })</td>       
+        <td style="padding-left:30px">@Html.ActionLink(Resources.ProductAndCRUD.Delete, "Delete", new { id = item.ID }, new { 
+            onclick = "javascript:return confirm('" + Resources.GlobalString.AreYouSure + "')" })</td>
+    </tr>
+}  
+
+</table>

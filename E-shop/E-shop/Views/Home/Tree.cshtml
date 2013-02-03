@@ -1,0 +1,24 @@
+﻿@model IEnumerable<E_shop.Models.Category>
+
+@using MvcContrib.UI.Grid;
+
+@{
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName);
+}
+
+@*<div id="menucontainer">
+    <ul id="menu">
+         <li>*@
+@*<div>*@
+             @Html.Grid(Model).Columns(column=>{
+                    column.For(x => Html.ActionLink(!cultureName.Equals("en") ? x.NameRu : x.NameEn, "Index", "Subcategory", new { x.ID },
+                        null)).Named(Resources.ProductAndCRUD.Name);
+             }).Empty(Resources.Other.FoundNot)
+@*</div>*@
+         @*</li>
+    </ul>
+</div>*@

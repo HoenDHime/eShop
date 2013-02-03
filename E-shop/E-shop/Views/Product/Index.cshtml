@@ -1,0 +1,74 @@
+@model IEnumerable<E_shop.Models.Product>
+@using MvcContrib.UI.Grid;
+@using MvcContrib.Pagination;
+@using MvcContrib.UI.Pager;
+@using E_shop.Code;
+
+@*@{
+    ViewBag.Title = string.Format("Товары | {0}", Resources.GlobalString.Title);
+}*@
+
+@*<p>
+    @Html.ActionLink("На главную", "Index", "Home")
+    @E_shop.Constants.BREADCRUMBS_SEPARATOR
+    Товары
+</p>*@
+
+<h2>@Resources.GlobalString.Products </h2>
+
+@{
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName);
+    
+if (Request.IsAuthenticated && User.IsInRole(E_shop.Constants.ROLE_ADMIN))
+{     
+
+<p>
+    @Html.ActionLink(Resources.ProductAndCRUD.Create, "Create") 
+</p>
+
+<p/>
+    @Html.Pager((IPagination)Model).First(Resources.Other.First).Last(Resources.Other.Last).Next(Resources.Other.Next).Previous(Resources.Other.Back).Format(Resources.Other.Elements)
+<p/>
+
+@Html.Grid(Model).Columns(column=>{
+    column.For(x => Html.ActionLink(!cultureName.Equals("en") ? x.NameRu : x.NameEn, "Details", "Product", new { id = x.ID }, null)).Named(Resources.ProductAndCRUD.Name);
+    column.For(x => x.Price + Resources.ProductAndCRUD.UAH).Named(Resources.ProductAndCRUD.Price).Format("{0:C}");
+    column.For(x => !cultureName.Equals("en") ? x.DescriptionRu : x.DescriptionEn).Named(Resources.ProductAndCRUD.Description).Sortable(false);
+    column.For(x => x.ImageExt != null ? "<a href=\"" + Url.Action("Details", "Product", new { id = x.ID })
+        + "\"><img src=\"" + Url.Content("~/Content/ProductImages/Mini/" + x.ID + x.ImageExt) + "\"/></a>" : "<a href=\""
+        + Url.Action("Details", "Product", new { id = x.ID }) + "\"><img src=\""
+        + Url.Content("~/Content/ProductImages/Mini/0.jpg") + "\"/></a>").Encode(false).Named(Resources.ProductAndCRUD.Image).Sortable(false);    
+    column.For(x => x.AvailableDiscounts == true ? "Да" : "Нет").Named(Resources.ProductAndCRUD.AvailableDiscount);
+    column.For(x => x.Date).Named(Resources.ProductAndCRUD.Date).Format("{0:D}");
+    column.For(x => x.InStock - x.CurrentBalance).Named(Resources.ProductAndCRUD.TheNumberOfSales);
+    column.For(x => x.Discount).Named(Resources.ProductAndCRUD.AmountOfDiscount).Sortable(false);
+    column.For(x => x.InStock).Named(Resources.ProductAndCRUD.ProductInStock).Sortable(false);
+    column.For(x => x.CurrentBalance).Named(Resources.ProductAndCRUD.CurrentBalance).Sortable(false);  
+}).Sort((GridSortOptions) ViewData["sortGrid"]).Empty(Resources.Other.FoundNot)
+
+}
+
+else
+{
+@Html.Grid(Model).Columns(column=>{
+    column.For(x => Html.ActionLink(!cultureName.Equals("en") ? x.NameRu : x.NameEn, "Details", "Product", new { id = x.ID }, null)).Named(Resources.ProductAndCRUD.Name);
+    column.For(x => x.Price + Resources.ProductAndCRUD.UAH).Named(Resources.ProductAndCRUD.Price).Format("{0:C}");
+    column.For(x => !cultureName.Equals("en") ? x.DescriptionRu : x.DescriptionEn).Named(Resources.ProductAndCRUD.Description).Sortable(false);
+    column.For(x => x.ImageExt != null ? "<a href=\"" + Url.Action("Details", "Product", new { id = x.ID })
+        + "\"><img src=\"" + Url.Content("~/Content/ProductImages/Mini/" + x.ID + x.ImageExt) + "\"/></a>" : "<a href=\""
+        + Url.Action("Details", "Product", new { id = x.ID }) + "\"><img src=\""
+        + Url.Content("~/Content/ProductImages/Mini/0.jpg") + "\"/></a>").Encode(false).Named(Resources.ProductAndCRUD.Image).Sortable(false);    
+    column.For(x => x.AvailableDiscounts == true ? "Да" : "Нет").Named(Resources.ProductAndCRUD.AvailableDiscount);
+    column.For(x => x.Date).Named(Resources.ProductAndCRUD.Date).Format("{0:D}");
+    column.For(x => x.InStock - x.CurrentBalance).Named(Resources.ProductAndCRUD.TheNumberOfSales);
+    column.For(x => x.CurrentBalance > 0 ? "++" : "--").Named(Resources.ProductAndCRUD.ProductAvailability).Sortable(false);  
+}).Sort((GridSortOptions) ViewData["sortGrid"]).Empty(Resources.Other.FoundNot)
+}
+}
+<p/>
+    @Html.Pager((IPagination)Model).First(Resources.Other.First).Last(Resources.Other.Last).Next(Resources.Other.Next).Previous(Resources.Other.Back).Format(Resources.Other.Elements)
+<p/>

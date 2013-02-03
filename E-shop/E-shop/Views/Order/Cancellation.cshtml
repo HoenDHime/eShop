@@ -1,0 +1,45 @@
+﻿@model E_shop.Models.Order
+@using E_shop.Code;
+
+@{  
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName); 
+}
+
+<table>
+    <tr>
+        <th style="padding-left:20px">@Resources.ProductAndCRUD.Name</th>
+        <th style="padding-left:20px">@Resources.ProductAndCRUD.Price</th>
+        <th style="padding-left:20px">Количество</th>
+        <th style="padding-left:20px">Стоимость</th>
+    </tr>
+    @foreach (var item in Model.OrderItems)
+    {     
+        <tr>
+            <td style="padding-left:20px">@(!cultureName.Equals("en") ? item.NameRu : item.NameEn)</td>
+            <td style="padding-left:20px">@item.Price @Resources.ProductAndCRUD.UAH</td>
+            <td style="padding-left:20px">@item.Number шт</td>
+            <td style="padding-left:20px">@(item.Price * item.Number) @Resources.ProductAndCRUD.UAH</td>
+        </tr>
+    }
+    <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td style="font-weight:bold">
+        @Model.OrderItems.Select(item => item.Price * item.Number).Sum() @Resources.ProductAndCRUD.UAH</td>
+    </tr>
+</table>
+
+@using (Html.BeginForm())
+{
+    @Html.Hidden("orderID", Model.ID)
+    <input type="submit" value="Отменить заказ" />
+}
+<p>
+    @Html.ActionLink(Resources.GlobalString.BackToList, "Index","Personal")
+</p>
+

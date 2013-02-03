@@ -1,0 +1,17 @@
+﻿@using E_shop.Code;
+
+@*@{
+    ViewBag.Title = string.Format("Почта | {0}", E_shop.Constants.TITLE);
+}*@
+@if (Request.IsAuthenticated && User.IsInRole(E_shop.Constants.ROLE_ADMIN))
+{
+    <h2>@Html.Resource("SuccessfullyGenerated")</h2>
+
+    <p>@Html.ActionLink(Html.Resource("GenerateAnotherKeyCode"), "Index")</p>
+}
+else 
+{
+    <h2>@Html.Resource("SuccessfullyReplenished")</h2>
+
+    <p>@Html.ActionLink(Html.Resource("FillAnotherAccount"), "Index")</p>
+}

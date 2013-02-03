@@ -1,0 +1,34 @@
+﻿@using E_shop.Code;
+
+@*@{
+    ViewBag.Title = string.Format("Почта | {0}", E_shop.Constants.TITLE);
+}*@
+
+<h2>@Resources.GlobalString.ToMail</h2>  
+
+@if (Request.IsAuthenticated && User.IsInRole(E_shop.Constants.ROLE_ADMIN))
+{
+    using (Html.BeginForm("Mail", "Mail")) 
+    { 
+        <p>@Html.Resource("EnterTheRecipientsNickname")</p>
+        @Html.TextBox("to")
+        <p>@Html.Resource("EnterSubject")</p>
+        @Html.TextBox("subject")
+        <p>@Html.Resource("EnterMainText")</p>
+        @Html.TextArea("body", new { cols = 70, rows = 5 })
+        <br /><br />
+        <input type="submit" value="@Html.Resource("Send")" />
+    }
+}
+else if (Request.IsAuthenticated && !User.IsInRole(E_shop.Constants.ROLE_ADMIN))
+{
+    using (Html.BeginForm("MailToAdmin", "Mail")) 
+    { 
+        <p>@Html.Resource("EnterSubject")</p>
+        @Html.TextBox("subject")
+        <p>@Html.Resource("EnterMainText")</p>
+        @Html.TextArea("body", new { cols = 70, rows = 5 })
+        <br /><br />
+        <input type="submit" value="@Html.Resource("Send")" />
+    }
+}

@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Dishwasher1" xml:space="preserve">
+    <value>Преимущества посудомоечной машины</value>
+  </data>
+  <data name="Dishwasher2" xml:space="preserve">
+    <value>Всю работу посудомоечной машины условно можно разделить на несколько этапов. Сначала вся посуда загружается в определенные отсеки для каждого типа посуды - ложки, вилки, ножи и мелкие столовые приборы закладываются в специальную корзинку.  В верхний лоток закладываются небольшие тарелки, чашки, блюдца, бокалы. Ну а в нижний - миски, большие тарелки, блюда, сковороды, кастрюли. Посуду необходимо складывать так, чтобы струя воды могла омывать посуду со всех сторон, смыть жир и  остатки пищи. Следующий этап – это сам процесс мойки посуды. Его описать можно следующим образом: вода заданной температуры,  под определенным давлением тоненькими струйками поступает в машину и сразу разбрызгивается вращающимися коромыслами так, что все остатки пищи полностью смываются. В случае, если есть очень грязная посуда, и к ней уже успели присохнуть остатки пищи, или вы загрузили посуду с пригорелой едой, то перед основной мойкой можно использовать програму "Замачивание". При замачивании посуда сбрызгивается холодной водой с (или без) малым количеством моющего средства и оставляется на некоторое время, в последствии при мойке, отмокшие остатки удаляются гораздо легче. После мойки начинается процесс полоскания посуды. Он происходит в несколько циклов с добавлением специального ополаскивателя, благодаря которому после высыхания на посуде не остается разводов и капель от высохшей воды. И, наконец, завершающшим этапом является процесс сушки.</value>
+  </data>
+  <data name="Dishwasher3" xml:space="preserve">
+    <value>При выборе посудомоечной машины, следует обращать внимание на уровень энергопотребления, мойку, сушку, которые в свою очередь разделяются на несколькоклассов. Рассмотрим их более подробно. Уровень энергопотребления, в зависимости от экономии, разделяют на следующие классы:&lt;br /&gt;• А считается самым экономичным, при котором потребление электороэнергии сводится к минимуму&lt;br /&gt;• В считается среднеэкономичным&lt;br /&gt;• С наименее экономичный&lt;br /&gt;Большинство посудомоечных машин имеют класс потребления энергии A или B.  Класс мойки определяет уровень чистоты вымытой посуды, и в зависимости от результатов, разделяют следующие: &lt;br /&gt; • А - идеально чистая посуда&lt;br /&gt; • В и С - заметны незначительные загрязнения. &lt;br /&gt;  Чем выше класс, тем лучше машина справляется со своей задачей. Класс сушки присваивается в зависимости от того, насколько качественно машина высушивает посуду после мытья. Поэтому,  в зависимости от результатов сушки, выделяют следующие классы: &lt;br /&gt;• А - идеально сухая посуда&lt;br /&gt;  • для машин с классами B и C допустимо наличие несколько капель на посуде. &lt;br /&gt; Рекомендуется приобретать модели с высокими показателями (класс сушки A или B), чтобы избежать появления потеков.</value>
+  </data>
+  <data name="ImageEditing" xml:space="preserve">
+    <value>Редактирование изображения</value>
+  </data>
+  <data name="Mobile1" xml:space="preserve">
+    <value>Как выбрать мобильный телефон?</value>
+  </data>
+  <data name="Mobile2" xml:space="preserve">
+    <value>Функциональность – необходимая или излишняя?</value>
+  </data>
+  <data name="Mobile3" xml:space="preserve">
+    <value>Абсолютно все современные телефоны, включая самые доступные, обладают джентльменским набором возможностей, к которым относятся: телефонная книга, редактор SMS, часы и калькулятор и т.д. Все остальные функции, включая браузеры, полифонию, фонарики, поддержку карт памяти и многое другое относятся к дополнительным, что для покупателя обозначает  одну простую вещь – за них придется доплатить. Соответственно, если вам или вашим родственникам нужен аппарат исключительно для звонков, то нет смысла переплачивать за более дорогую модель.</value>
+  </data>
+  <data name="Mobile4" xml:space="preserve">
+    <value>В современных условиях выбор телефона сводится к нахождению ответа всего на три вопроса: «Как я буду использовать  свой будущий аппарат?» (только говорить, фотографировать, слушать музыку, работать, красоваться и т.д.), «Самый удобный формфактор?» (моноблок, раскладушка, слайдер, сенсорный) и наконец «Любимый телефонный бренд?» (Nokia, Samsung, Sony Ericsson и др.). А уж ответы на эти вопросы и покажут вам, сколько денег придется выложить за оптимальный выбор.</value>
+  </data>
+  <data name="PlaneTable1" xml:space="preserve">
+    <value>Как выбрать планшет?</value>
+  </data>
+  <data name="PlaneTable2" xml:space="preserve">
+    <value>С легкой руки Apple рынок планшетных компьютеров сегодня развивается огромными темпами. На нем присутствует большое количество разнообразных моделей. При этом покупателю, не знакомому со спецификой этого рынка, приходится непросто: нужно определяться не только с характеристиками и функциональностью устройства, но и с платформой, на которой оно работает. Чтобы облегчить выбор, давайте посмотрим, что такое планшет, как его эффективно использовать  и из каких соображений выбирать.</value>
+  </data>
+  <data name="PlaneTable3" xml:space="preserve">
+    <value>Планшет – это экран!</value>
+  </data>
+  <data name="PlaneTable4" xml:space="preserve">
+    <value>Если взять и отделить от типичного ноутбука клавиатурный блок, в ваших руках останется только его экран. По сути, большинство планшетов именно так и выглядят: сенсорный экран занимает в них до 90% лицевой панели, а управлять устройством нужно с помощью прикосновения к нему.</value>
+  </data>
+  <data name="PlaneTable5" xml:space="preserve">
+    <value>Платформа (операционная система)</value>
+  </data>
+  <data name="PlaneTable6" xml:space="preserve">
+    <value>Характеристики и оснащение</value>
+  </data>
+  <data name="PlaneTable7" xml:space="preserve">
+    <value>Вопрос дисплея мы уже обсудили, но на этом планшет не заканчивается. Все современные модели Android-планшетов основываются на одно- или двухъядерном процессоре (называемом также SoC, «система-на-чипе») архитектуры ARM и производства Qualcomm, NVIDIA, Texas Instruments либо Samsung. Модели Apple также работают на ARM-процессорах, но собственного дизайна калифорнийской компании. Ну, а Windows-разновидности, как уже было упомянуто, чаще всего построены на базе Intel Atom (x86). Частота процессора и объем памяти влияют на производительность устройства напрямую – чем выше и больше, тем быстрее и лучше. А вот от двухъядерности заметных преимуществ пока что не видно, по крайней мере, в стане Android-устройств – возможно,  со временем эта ОС и научится использовать мощности второго ядра на всю.  Все современные модели оснащаются беспроводными интерфейсами – как правило, это Wi-Fi и опционально Bluetooth (нужен для подключения беспроводной гарнитуры и других аксессуаров). Одни и те же модели могут поставляться со встроенным 3G-модемом либо без него – если вы не планируете пользоваться планшетом вне покрытия домашней и рабочей WiFi-сетей, можно на этом сэкономить. Но, учитывая доступность мобильного интернета даже в нашей стране, 3G для планшета можно считать одной из самых желанных опций.</value>
+  </data>
+  <data name="TV1" xml:space="preserve">
+    <value>Нужен ли вам новый телевизор?</value>
+  </data>
+  <data name="TV2" xml:space="preserve">
+    <value>Кадры решают все!</value>
+  </data>
+  <data name="TV3" xml:space="preserve">
+    <value>Представим, что происходит, когда на типичном жидкокристаллическом телевизоре демонстрируется динамичное, быстро изменяющееся изображение. Это не такая уж редкость: гепард, преследующий антилопу на Animal Planet, с треляющие из куриной пушки «Разрушители легенд» на Discovery и даже стремительно несущиеся и меняющиеся на ходу трансформеры с DVD - в любом из этих случаев стандартных 50 Гц для отображения быстрых движений может оказаться недостаточно. То же самое касается спортивных соревнований: представьте, например, хоккеиста-вратаря, отбивающего летящую шайбу – если вратаря при низкой частоте кадров вы рассмотрите еще более-менее нормально, то шайба рискует вообще потеряться из виду. Потому как при низкой частоте кадровой развертки быстро перемещающиеся по экрану объекты выглядят нерезкими, размытыми. Или отображаться дискретно, что тоже не добавляет реализма изображению – создается иллюзия, что предметы перемещаются рывками. Как же решить эти проблемы? Ответ очевиден: нужно постараться воспроизвести  естественно плавную динамику движения быстрых объектов. Сделать это можно только одним способом – увеличив частоту смены кадров. Только это позволит более четко визуализировать перемещения динамичных объектов. Например,  летящий футбольный мяч уже не будет мельтешить по экрану, а будет плавно перемещаться по его площади, что делает изображение более реалистичным. Но откуда же взять недостающие кадры? Ведь источник видеосигнала их не передает. Как ни парадоксально это звучит, но недостающие промежуточные кадры приходится «выдумывать». Занимается этим специальный чип – «выдумщик», называемый видеопроцессор. Именно он создает новые кадры, вставляя их между уже существующими. Попутно видеопроцессор успевает заниматься шумоподавлением, увеличением резкости изображения, коррекцией цветопередачи и иными полезными делами.</value>
+  </data>
+</root>

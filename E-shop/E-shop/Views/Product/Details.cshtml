@@ -1,0 +1,117 @@
+@model E_shop.Models.Product
+@using E_shop.Code;
+
+@*@{
+    ViewBag.Title = string.Format("{0} | Товар | {1}", Model.Name, E_shop.Constants.TITLE);
+}*@
+
+@if (Request.IsAuthenticated && User.IsInRole(E_shop.Constants.ROLE_ADMIN))
+{
+<p>@Html.ActionLink(Resources.ProductAndCRUD.Edit, "Edit", new { id = Model.ID })
+   @Html.ActionLink(Resources.GlobalString.BackToList , "Index")</p>
+     
+    using(Html.BeginForm("Delete","Product", FormMethod.Post, new
+    { onsubmit = "javascript:return confirm('" + Resources.GlobalString.AreYouSure + "');" }))
+    {
+         @Html.Hidden("id", Model.ID)
+         <input type="submit" value="@Resources.ProductAndCRUD.Delete" />
+    }
+
+    if (ViewData["ErrorProductDelete"] != null)
+    {
+        Html.RenderPartial("ErrorDelete");
+    }
+}
+else {
+   <p>@Html.ActionLink(Resources.GlobalString.BackToList , "Index","Home")</p>
+}
+@{
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName);  
+    
+<h2>@(!cultureName.Equals("en") ? Model.NameRu : Model.NameEn)</h2>
+<p><span style="font-weight:bold">@Resources.ProductAndCRUD.Price: </span>@Model.Price @Resources.ProductAndCRUD.UAH</p>
+if (Model.AvailableDiscounts==true)
+{
+    <p><span style="font-weight:bold">@Html.Resource("Discount"): </span>@Model.Discount %</p>
+}
+
+<p>@(!cultureName.Equals("en") ? Model.DescriptionRu : Model.DescriptionEn)</p>
+
+if (Model.CurrentBalance > 0)
+{
+    <h3><b>@Html.Resource("ItemIsInStock")</b></h3>                                                                                                                          
+    <p>@Html.ActionLink(Html.Resource("AddToCart"), "Add", "Cart", new { id = Model.ID }, null)</p>
+}
+else { <h3><b>@Html.Resource("TheProductIsNotAvailable")</b></h3>}
+    
+if (!string.IsNullOrWhiteSpace(Model.ImageExt))
+{
+    <div style="width:100%; text-align:center">
+        <img src="@Url.Content("~/Content")/@(Resources.GlobalString.PRODUCT_IMAGES_FOLDER)/@Model.ID@Model.ImageExt.TrimEnd()?@DateTime.Now" alt="@(cultureName.Equals("ru-Ru") ? Model.NameRu : Model.NameEn)" />
+    </div>
+}
+if (Request.IsAuthenticated && User.IsInRole(E_shop.Constants.ROLE_ADMIN))
+{
+    <h2>@Resources.Other.UploadImage</h2>
+    
+using (Html.BeginForm("UploadImage", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+        @Html.Hidden("objID", Model.ID)
+
+        <table>
+            <tr>
+                <td>
+                    @{
+                        string filename = string.Empty;
+                        if(string.IsNullOrWhiteSpace(Model.ImageExt)) { filename="0.jpg"; }
+                        else { filename = string.Format("{0}{1}?{2}", Model.ID, Model.ImageExt.TrimEnd(), DateTime.Now); }
+                    }
+                    <img src="@Url.Content("~/Content")/@(Resources.GlobalString.PRODUCT_IMAGES_FOLDER)/@(Resources.GlobalString.PRODUCT_IMAGES_MINI_FOLDER)/@filename" alt="@(!cultureName.Equals("en") ? Model.NameRu : Model.NameEn)" />
+                </td>
+                <td style="padding-left:20px">
+                    <input type="file" name="imagefile" />
+                    <br />
+                    <input type="submit" value="@Resources.Other.Upload" />
+                </td>
+            </tr>
+        </table>
+}
+
+    <h2>@Html.Resource("Subcategory")</h2>
+    if (Model.SubcategoryProducts.Count > 0)
+    {
+        <table>
+        @foreach (var item in Model.SubcategoryProducts.OrderBy(item => cultureName.Equals("ru-Ru") ? item.Subcategory.NameRu : item.Subcategory.NameEn))
+        {
+            <tr>
+                <td>@(!cultureName.Equals("en") ? item.Subcategory.NameRu : item.Subcategory.NameEn)</td>
+                <td style="padding-left:20px">@Html.ActionLink(Resources.ProductAndCRUD.Delete, "DeleteExpress", "SubcategoryProduct", 
+                new { id = item.ID, IdP=Model.ID }, new { onclick = "javascript:return confirm('" + Resources.GlobalString.AreYouSure + "');" })</td>
+            </tr>
+        }
+        </table>
+    }
+    
+    <h2>@Html.Resource("AddSubcategory")</h2>
+    
+    using (Html.BeginForm("Add", "SubcategoryProduct", FormMethod.Post))
+    {
+        @Html.Hidden("ProductID", Model.ID)
+        E_shop.Models.SubcategoryRepository subcategoryRepository = new E_shop.Models.SubcategoryRepository(new E_shop.Models.Entities());
+
+        var querySubcategories = subcategoryRepository.List().Select(item => new { ID = item.ID, Name = cultureName.Equals("ru-Ru") ? item.NameRu : item.NameEn }).ToList();
+        var listSubcategories = querySubcategories.Select(item => new SelectListItem()
+        {
+            Text = item.Name, 
+            Value = item.ID.ToString(),
+            Selected = false }).ToList();
+        @Html.DropDownList("SubcategoryID", listSubcategories, "...")
+
+        <input type="submit" value="@Html.Resource("Add")" />
+    }
+}
+}

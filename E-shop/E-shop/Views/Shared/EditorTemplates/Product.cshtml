@@ -1,0 +1,80 @@
+﻿@model E_shop.Models.Product
+
+@{
+    try{
+    @Html.ValidationSummary()
+    
+    <div class="editor-label">
+    @Resources.ProductAndCRUD.NameRu
+    </div>
+    @Html.EditorFor(model => model.NameRu)
+    <span style="color:Red">@Html.ValidationMessageFor(model => model.NameRu)</span>
+
+    <div class="editor-label">
+    @Resources.ProductAndCRUD.NameEn
+    </div>
+    @Html.EditorFor(model => model.NameEn)
+    <span style="color:Red">@Html.ValidationMessageFor(model => model.NameEn)</span>
+
+    <div class="editor-label">
+    @Resources.ProductAndCRUD.DescriptionRu
+    </div>
+    @Html.TextAreaFor(model => model.DescriptionRu, new { cols = 70, rows = 5 })
+     <span style="color:Red">@Html.ValidationMessageFor(model => model.DescriptionRu)</span>
+
+    <div class="editor-label">
+    @Resources.ProductAndCRUD.DescriptionEn
+    </div>
+    @Html.TextAreaFor(model => model.DescriptionEn, new { cols = 70, rows = 5 })
+     <span style="color:Red">@Html.ValidationMessageFor(model => model.DescriptionEn)</span>
+
+    <div class="editor-label">
+    @Html.LabelFor(model => model.PurchasePrice)
+    </div>
+    @Html.EditorFor(model => model.PurchasePrice)
+     <span style="color:Red">@Html.ValidationMessageFor(model => model.PurchasePrice)</span>
+  
+    <div class="editor-label">
+    @Html.LabelFor(model => model.Price)
+    </div>
+    @Html.EditorFor(model => model.Price)
+    <span style="color:Red">@Html.ValidationMessageFor(model => model.Price)</span>
+
+    <div class="editor-label">
+    @Html.LabelFor(model=>model.AvailableDiscounts)
+    </div>
+    @Html.EditorFor(model=>model.AvailableDiscounts)
+    <span style="color:Red">@Html.ValidationMessageFor(model => model.AvailableDiscounts)</span>
+ 
+    <div class="editor-label">
+    @Html.LabelFor(model => model.Discount)
+    </div>
+    @Html.EditorFor(model => model.Discount)
+    <span style="color:Red">@Html.ValidationMessageFor(model => model.Discount)</span>
+
+    <div class="editor-label">
+    @Html.LabelFor(model=>model.Date)
+    </div> 
+    @Html.EditorFor(model => model.Date)
+    <span style="color:Red">@Html.ValidationMessageFor(model => model.Date)</span>
+
+    <div class="editor-label">
+    @Html.LabelFor(model=>model.InStock)
+    </div> 
+    @Html.EditorFor(model => model.InStock)
+    <span style="color:Red">@Html.ValidationMessageFor(model => model.InStock)</span>
+
+    <div class="editor-label">
+    @Html.LabelFor(model=>model.CurrentBalance)
+    </div> 
+    @Html.EditorFor(model => model.CurrentBalance)
+    <span style="color:Red">@Html.ValidationMessageFor(model => model.CurrentBalance)</span>
+    <br /><br />
+}
+catch(Exception){ }
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#Date').datepicker({ firstDay: 1, dateFormat: 'dd.mm.yy' });
+    });
+</script>

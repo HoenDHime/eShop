@@ -1,0 +1,42 @@
+﻿@model IEnumerable<E_shop.Models.Product>
+@using MvcContrib.UI.Grid;
+@using MvcContrib.Pagination;
+@using MvcContrib.UI.Pager;
+@using E_shop.Code;
+
+@*@{
+    ViewBag.Title = string.Format("Наиболее продаваемые товары | {0}", E_shop.Constants.TITLE);
+}*@
+
+<h2>@Html.Resource("TheBestSellingProducts")</h2>
+@{
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName); 
+}  
+ 
+@Html.Grid(Model).Columns(column=>{
+    column.For(x => Html.ActionLink(!cultureName.Equals("en") ? x.NameRu : x.NameEn, "Details", new { x.ID })).Named(Resources.ProductAndCRUD.Name);   
+    column.For(x => x.Price + " грн.").Named(Resources.ProductAndCRUD.Price).Format("{0:C}");
+    column.For(x => !cultureName.Equals("en") ? x.DescriptionRu : x.DescriptionEn).Named(Resources.ProductAndCRUD.Description);
+    column.For(x => x.ImageExt != null ? "<a href=\"" + Url.Action("Details", "Product", new { x.ID })
+        + "\"><img src=\"" + Url.Content("~/Content/ProductImages/Mini/" + x.ID + x.ImageExt) + "\"/></a>" : "<a href=\""
+        + Url.Action("Details", "Product", new { x.ID }) + "\"><img src=\""
+        + Url.Content("~/Content/ProductImages/Mini/0.jpg") + "\"/></a>").Encode(false).Named(Resources.ProductAndCRUD.Image);
+    column.For(x => x.AvailableDiscounts).Named(Resources.ProductAndCRUD.AvailableDiscount);
+    column.For(x => x.Discount).Named(Resources.ProductAndCRUD.AmountOfDiscount);
+    column.For(x => x.Date).Named(Resources.ProductAndCRUD.Date).Format("{0:D}");
+    column.For(x => x.InStock).Named(Resources.ProductAndCRUD.ProductInStock);
+    column.For(x => x.CurrentBalance).Named(Html.Resource("CurrentBalance"));
+})
+
+<p/>
+    @Html.Pager((IPagination)Model).First(Resources.Other.First).Last(Resources.Other.Last).Next(Resources.Other.Next).Previous(Resources.Other.Back).Format(Resources.Other.Elements)
+<p/>
+
+<br />
+<div>
+    @Html.ActionLink(Resources.GlobalString.BackToList, "Index")
+</div>

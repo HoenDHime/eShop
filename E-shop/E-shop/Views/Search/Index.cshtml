@@ -1,0 +1,80 @@
+﻿@model ProductListContainerViewModel
+
+@using MvcContrib.UI.Grid;
+@using MvcContrib.Pagination;
+@using MvcContrib.UI.Pager;
+@using E_shop.Code;
+
+@*@{
+    ViewBag.Title = string.Format("Поиск | {0}", E_shop.Constants.TITLE);
+}*@
+
+<h2>@Resources.GlobalString.Search</h2>
+
+@*@Html.ActionLink("На главную", "Index", "Home")*@
+
+
+@using (Html.BeginForm("Index", "Search", FormMethod.Get))
+{
+    try{
+    <table>
+        <tr>
+            <td>@Resources.GlobalString.Subcategory</td>
+            <td> @Html.DropDownList("subcategoryID", Model.ProductFilterViewModel.SubcategoryList, "--------")</td>
+        </tr>
+        <tr>
+            <td>@Resources.Other.SearchName</td> 
+            <td> @Html.TextBox("Name", Model.ProductFilterViewModel.ProductSearchName)</td> 
+        </tr>
+        <tr>
+            <td>@Resources.Other.SearchAdded</td>
+            <td>@Html.TextBox("DateFromFirst")</td> 
+        </tr> 
+        <tr>
+            <td>@Resources.Other.SearchAddedTo</td> 
+            <td>@Html.TextBox("DateToLast")</td> 
+        </tr> 
+        <tr>
+            <td></td>
+            <td>@Resources.Other.format @DateTime.Now</td>  
+        </tr> 
+    </table>
+}
+catch(Exception){}
+    <input type="submit" value="@Resources.Other.Find" />
+}
+<br />
+@{ try{ Html.RenderPartial("Pager", Model.ProductPagedList);}catch(Exception){} }
+
+<br />
+@{
+    try{
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName); 
+    
+@Html.Grid(Model.ProductPagedList).Columns(column=>{
+    column.For(x => Html.ActionLink(!cultureName.Equals("en") ? x.NameRu : x.NameEn, "Details", "Product", new { id = x.ID }, null)).Named(Resources.ProductAndCRUD.Name);
+    column.For(x => x.Price + Resources.ProductAndCRUD.UAH).Named(Resources.ProductAndCRUD.Price).Format("{0:C}");
+    column.For(x => cultureName.Equals("ru-Ru") ? x.DescriptionRu : x.DescriptionEn).Named(Resources.ProductAndCRUD.Description);
+    column.For(x => x.ImageExt != null ? "<a href=\"" + Url.Action("Details", "Product", new { id = x.ID })
+        + "\"><img src=\"" + Url.Content("~/Content/ProductImages/Mini/" + x.ID + x.ImageExt) + "\"/></a>" : "<a href=\""
+        + Url.Action("Details", "Product", new { id = x.ID }) + "\"><img src=\""
+        + Url.Content("~/Content/ProductImages/Mini/0.jpg") + "\"/></a>").Encode(false).Named(Resources.ProductAndCRUD.Image);
+    column.For(x => x.CurrentBalance > 0 ? "++" : "--").Named(Resources.ProductAndCRUD.ProductAvailability);
+    column.For(x => x.Date);
+}).Empty(Resources.Other.FoundNot) 
+       }
+       catch(Exception){ }
+}
+
+@{ try{ Html.RenderPartial("Pager", Model.ProductPagedList);}catch(Exception){} }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#DateFromFirst').datepicker({ firstDay: 1, dateFormat: 'dd.mm.yy' });
+        $('#DateToLast').datepicker({ firstDay: 1, dateFormat: 'dd.mm.yy' });
+    });
+</script>

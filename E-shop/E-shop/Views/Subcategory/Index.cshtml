@@ -1,0 +1,39 @@
+@model IEnumerable<E_shop.Models.Subcategory>
+@using MvcContrib.UI.Grid;
+
+@*@{
+    ViewBag.Title = string.Format("Подкатегории | {0}", E_shop.Constants.TITLE);
+}*@
+
+@*<p>
+    @Html.ActionLink("На главную", "Index", "Home")
+    @E_shop.Constants.BREADCRUMBS_SEPARATOR
+    Подкатегории
+</p>*@
+
+@{
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName);       
+}
+
+@if (Request.IsAuthenticated && User.IsInRole(E_shop.Constants.ROLE_ADMIN))
+{
+<p>@Html.ActionLink(Resources.ProductAndCRUD.Create, "Create")</p>
+}
+@*<table><tr align="center" valign="top"><td>*@
+@Html.Grid(Model).Columns(column=>{
+    if (Request.IsAuthenticated && User.IsInRole(E_shop.Constants.ROLE_ADMIN))
+    {
+        column.For(x => Html.ActionLink(!cultureName.Equals("en") ? x.NameRu : x.NameEn, "Details", new { x.ID })).Named(Resources.ProductAndCRUD.Edit);
+    }
+    column.For(x => x.ImageExt != null ?
+       "<a href=\"" + Url.Action("Index", "Product", new { x.ID }, null) + "\"><img src=\"" + Url.Content("~/Content/" + Resources.GlobalString.SUBCATEGORY_MINI_IMAGES_FOLDER + "/"
+       + x.ID + x.ImageExt) + "\"/></a>" + "<br />" + Html.ActionLink(!cultureName.Equals("en") ? x.NameRu : x.NameEn, "Index", "Product", new { x.ID }, null)
+       : "<a href=\"" + Url.Action("Index", "Product", new { x.ID }, null) + "\"><img src=\"" + Url.Content("~/Content/" + Resources.GlobalString.SUBCATEGORY_MINI_IMAGES_FOLDER + "/"
+        + "0.jpg") + "\"/></a>" + "<br />" + Html.ActionLink(!cultureName.Equals("en") ? x.NameRu : x.NameEn, "Index", "Product", new { x.ID }, null)).Encode(false).Named(Resources.ProductAndCRUD.Name);
+}).Empty(Resources.Other.FoundNot)
+@*</td></tr></table>*@
+    

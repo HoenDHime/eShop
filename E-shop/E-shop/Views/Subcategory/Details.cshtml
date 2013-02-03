@@ -1,0 +1,57 @@
+﻿@model E_shop.Models.Subcategory
+
+@*@{
+    ViewBag.Title = string.Format("Подкатегории | {0}", E_shop.Constants.TITLE);
+}*@
+@{
+    string cultureName = null;
+    HttpCookie cultureCookie = Request.Cookies["_culture"];
+    if (cultureCookie != null) { cultureName = cultureCookie.Value; }
+    else { cultureName = Request.UserLanguages[0]; }
+    cultureName = E_shop.Utility.CultureHelper.GetImplementedCulture(cultureName);
+}
+       
+<h2>@(!cultureName.Equals("en") ? Model.NameRu : Model.NameEn)</h2>
+
+@if (Request.IsAuthenticated && User.IsInRole(E_shop.Constants.ROLE_ADMIN))
+{
+<p>@Html.ActionLink(Resources.ProductAndCRUD.Edit, "Edit", new { id = Model.ID })</p>
+       
+    using(Html.BeginForm("Delete","Subcategory", FormMethod.Post, new
+    { onsubmit = "javascript:return confirm('" + Resources.GlobalString.AreYouSure + "');" }))
+    {
+         @Html.Hidden("id", Model.ID)
+         <input type="submit" value="@Resources.ProductAndCRUD.Delete" />
+    }
+
+    if (ViewData["ErrorSubcategoryDelete"] != null)
+    {
+        Html.RenderPartial("ErrorDelete");
+    }
+}
+
+<h2>@Resources.Other.ThumbnailSectionSubcategory</h2>
+    
+@using (Html.BeginForm("UploadCatalogImage", "Subcategory", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+        @Html.Hidden("objID", Model.ID)
+        <table>
+            <tr>
+                <td>
+                    @{
+                        string filename = string.Empty;
+                        if(string.IsNullOrWhiteSpace(Model.ImageExt)) { filename = "0.jpg"; }
+                        else { filename = string.Format("{0}{1}?{2}", Model.ID, Model.ImageExt.TrimEnd(), DateTime.Now); }
+                    }
+                    <img src='@(Url.Content("~/Content"))/@(Resources.GlobalString.SUBCATEGORY_MINI_IMAGES_FOLDER)/@(filename)' alt='@(!cultureName.Equals("en") ? Model.NameRu : Model.NameEn)' />
+                </td>
+                <td style="padding-left:20px">
+                    <input type="file" name="imagefile" />
+                    <br />
+                    <input type="submit" value="@Resources.Other.Upload" />
+                </td>
+            </tr>
+        </table>
+}
+
+

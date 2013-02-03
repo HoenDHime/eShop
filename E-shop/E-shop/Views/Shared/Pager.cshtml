@@ -1,0 +1,5 @@
+﻿@model MvcContrib.Pagination.IPagination
+@using MvcContrib.UI.Pager
+<p>
+    @Html.Pager(Model).First(Resources.Other.First).Last(Resources.Other.Last).Next(Resources.Other.Next).Previous(Resources.Other.Back).Format(Resources.Other.Elements)
+<p/>

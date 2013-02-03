@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Dishwasher1" xml:space="preserve">
+    <value>Advantages of the dishwasher</value>
+  </data>
+  <data name="Dishwasher2" xml:space="preserve">
+    <value>The entire operation of the dishwasher can be divided into several stages. First, all the dishes loaded into certain sections for each type of cookware - spoons, forks, knives and small utensils are placed in a special basket. In the upper tray lays small plates, cups, saucers, glasses. Well, in the lower - bowls, large plates, dishes, pans, pots. Utensils must be put so that the jet of water could wash the dishes from all sides, wash grease and food residue. The next step - is the process of washing dishes. Describe it as follows: water set temperature at a certain pressure trickle fed into the machine and immediately sprayed rotating rocker arms so that all food remains completely washed away. In the event that there is a very dirty dishes, and it had already prisohnut leftover food, or you downloaded the dishes with burnt food, before the main wash, you can use programa "Soaking". For soaking dishes sprinkled with cold water (or without) a small amount of detergent and left for some time, in consequence of cleaning, otmokshie residues are removed more easily. After washing, rinsing process begins. It occurs in several cycles with the addition of a special rinse aid, through which, after drying the dishes is not divorce, and drops of water dry. Finally, zavershayuschshim step is the drying process.</value>
+  </data>
+  <data name="Dishwasher3" xml:space="preserve">
+    <value>When choosing a dishwasher, you should pay attention to the level of energy consumption, washing, drying, which in turn are divided into neskolkoklassov. Let us consider them in more detail. Power consumption, depending on the economy, are divided into the following classes: &lt;br /&gt; • A is the most economical in consumption elektoroenergii minimized &lt;br /&gt; • In sredneekonomichnym considered &lt;br /&gt; • With less economical &lt;br /&gt; Most dishwashers are rated energy A or B. Washing class determines the level of purity washed dishes, and depending on the results, share the following: &lt;br /&gt; • A - perfectly clean dishes &lt;br /&gt; • B and C - minor visible contamination. &lt;br /&gt; The higher the class, the better the machine does its job. Drying are awarded based on how well the machine dries the dishes after washing. Therefore, depending on the results of drying, there are the following classes: &lt;br /&gt; • A - perfectly dry dishes &lt;br /&gt; • machines to classes B and C allowed the presence of a few drops on the dishes. &lt;br /&gt; It is recommended to purchase a model with high (Class A drying or B), to avoid streaks.</value>
+  </data>
+  <data name="ImageEditing" xml:space="preserve">
+    <value>Image Editing</value>
+  </data>
+  <data name="Mobile1" xml:space="preserve">
+    <value>How to choose a mobile phone?</value>
+  </data>
+  <data name="Mobile2" xml:space="preserve">
+    <value>Functionality - necessary or unnecessary?</value>
+  </data>
+  <data name="Mobile3" xml:space="preserve">
+    <value>Absolutely all modern phones, including the most affordable, have a gentleman's set of features, which include: the phone book, the editor of SMS, clock and calculator, etc. All other functions, including browsers, polyphony, flashlight, memory card support, and more are added that for the buyer means one simple thing - for them will have to pay. Accordingly, if you or your family need a device exclusively for calls, there is no reason to pay more for a more expensive model.</value>
+  </data>
+  <data name="Mobile4" xml:space="preserve">
+    <value>In modern conditions, the choice comes down to finding the phone answered all three questions: "How will I use my next phone?" (Just talk, take pictures, listen to music, work, show off, etc.), "The most convenient form factor?" (candy bar, clamshell, slider, touch), and finally the "favorite phone brand?» (Nokia, Samsung, Sony Ericsson, etc.). And as the answers to these questions and show you how much money will have to pay for the best choice.</value>
+  </data>
+  <data name="PlaneTable1" xml:space="preserve">
+    <value>How to choose a tablet?</value>
+  </data>
+  <data name="PlaneTable2" xml:space="preserve">
+    <value>With a light hand Apple Tablet PC market is now booming. Attended by a large number of different models. The purchaser is not familiar with the specifics of this market, have easy: you have to be determined not only to the characteristics and functionality of the device, but with the platform  in which it operates. To facilitate the selection, let's see what the tablet as its effective use   and choose from what reasons.</value>
+  </data>
+  <data name="PlaneTable3" xml:space="preserve">
+    <value>Tablet - a screen!</value>
+  </data>
+  <data name="PlaneTable4" xml:space="preserve">
+    <value>If we take and separate from the typical laptop keyboard unit in your hands will be only its screen.  In fact, most tablets that way and look: touch screen takes them up to 90% of the front panel,  and to operate the device by touching it.</value>
+  </data>
+  <data name="PlaneTable5" xml:space="preserve">
+    <value>Platform (operating system)</value>
+  </data>
+  <data name="PlaneTable6" xml:space="preserve">
+    <value>Specifications and features</value>
+  </data>
+  <data name="PlaneTable7" xml:space="preserve">
+    <value>Display issue has already been discussed, but this tablet does not end there. All current models of Android-tablet  based on single-or dual-core processor (also called SoC, «system-on-a-chip") ARM architecture production Qualcomm, NVIDIA, Texas Instruments or Samsung. Apple models also work on ARM-processors  but her own design company in California. Well, the Windows-species, as already mentioned,   most are based on the Intel Atom (x86).  Frequency of the processor and memory affect the performance of the device directly - the above and more, faster and better. But from the dual-core notable benefits have not yet seen, at least in the camp of Android-devices - possibly eventually the OS and learn to use the power of the second core at all. All current models are equipped with wireless interfaces - as a rule, it is Wi-Fi and optional Bluetooth (You need to connect a wireless headset and other accessories). The same models can be supplied with built-in 3G-modem or without it - if you do not plan to use the tablet without covering home and business WiFi-networks You can save this. But, given the availability of the mobile Internet, even in our country, 3G tablet can be considered one of the most desirable options.</value>
+  </data>
+  <data name="TV1" xml:space="preserve">
+    <value>Do you need a new TV?</value>
+  </data>
+  <data name="TV2" xml:space="preserve">
+    <value>Cadres decide everything!</value>
+  </data>
+  <data name="TV3" xml:space="preserve">
+    <value>Imagine what happens when a typical LCD TV demonstrates a dynamic, rapidly changing image. This is not such a rarity: a cheetah chasing an antelope on Animal Planet, with trelyayuschie chicken cannon "Mythbusters" on Discovery and even rapidly changing and rushing on the go with the Transformers DVD - in any of these cases, the standard 50 Hz to show fast movements can not be enough. The same goes for sports: imagine, for example, hockey-goalie slugger flying puck - if the goalkeeper with a low frame rate you look more or less normal, washer risks losing sight of. Because at low frequency Vertical fast moving objects on the screen appear blurred, out of focus. Or displayed discretely, which also adds to the realism image - creating the illusion that things are moving in spurts. How to solve these problems? The obvious answer is to try to reproduce the natural dynamics of the smooth motion of fast objects. This can be done only one way - by increasing the frame rate. Only this will more clearly visualize the movement of dynamic objects. For example, flying soccer ball will not be flashed on the screen, and will move smoothly on its surface, making the image more realistic. But where do we get the missing footage? After their video source does not. Paradoxical as it may sound, the missing intermediate frames have to "invent". Engaged in this special chip - "Fibber", called the video processor. That creates new frames, inserting them between the existing ones. Along the way, the video processor has time to deal with noise reduction, image sharpening, color correction, and other useful things.</value>
+  </data>
+</root>
