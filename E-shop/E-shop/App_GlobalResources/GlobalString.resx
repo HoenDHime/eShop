@@ -169,7 +169,7 @@
     <value>Статус вашей покупки был изменен. Теперь он имеет статус</value>
   </data>
   <data name="passSmtp" xml:space="preserve">
-    <value>784134230z</value>
+    <value>***ваш пароль от почты</value>
   </data>
   <data name="PaymentSystem" xml:space="preserve">
     <value>Система оплаты</value>
@@ -226,7 +226,7 @@
     <value>Отправка почты</value>
   </data>
   <data name="userSmtp" xml:space="preserve">
-    <value>xet-pk@mail.ru</value>
+    <value>***ваша почта</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Добро пожаловать</value>
