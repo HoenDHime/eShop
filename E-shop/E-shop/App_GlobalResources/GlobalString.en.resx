@@ -169,7 +169,7 @@
     <value>he status of your purchase has been changed. Now he has the status of</value>
   </data>
   <data name="passSmtp" xml:space="preserve">
-    <value>784134230z</value>
+    <value>***Youe E-mail password</value>
   </data>
   <data name="PaymentSystem" xml:space="preserve">
     <value>Payment System</value>
@@ -226,7 +226,7 @@
     <value>To Mail</value>
   </data>
   <data name="userSmtp" xml:space="preserve">
-    <value>xet-pk@mail.ru</value>
+    <value>***your E-mail</value>
   </data>
   <data name="Welcome" xml:space="preserve">
     <value>Welcome</value>
